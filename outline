@@ -1,0 +1,43 @@
+TODO
+- local storage saving
+- publish to GitHub pages
+
+LOCAL STORAGE
+- string that contains default html
+- onload, set the "document.documentElement.innerHTML" to what is saved, otherwise default
+- save button saves the current html to localStorage
+
+OOP DESIGN 
+
+SECTION (parent)
+
+Private variables: 
+- div element (div that contains smaller elements)
+- default trash button
+- default div element (div that contains text, buttons, etc. of a single element)
+- create button
+- list of trash buttons
+- div counter (counter for the amount of elements in a section)
+- listType (title, monday, etc.)
+
+Methods: 
+- Add element
+- Delete element
+- Add Delete Event (adds event listener to trash buttons)
+
+LISTITEM (child)
+
+Private variables: 
+- super
+- input 
+- color button
+- up button 
+- down button 
+
+Methods: 
+- Change color (cycles through 5 backgrounds for the text, clear, blue, green, yellow, purple)
+- Swap (specify up or down)
+
+General use: 
+- Create a single object for the title section manually 
+- For every day of the week, create an object and apply event listeners to them iteratively 
