@@ -1,6 +1,3 @@
-// TODO: 
-// - constructor event listener conditional
-
 /** SECTION CLASS */
 
 class Section {
@@ -18,30 +15,36 @@ class Section {
         this.listType = listType; 
 
         // retrieve data from localStorage
-        this.numTitles = Number(localStorage.getItem("numTitle")); 
-        let maxDivNum = 1; // store the max ID number so that there are no duplicates when creating titles
-        let titleNums = []; 
-        // if there are more than 1 title in localStorage, event listeners must be added to the buttons
-        if (this.numTitles > 1) {
-            for (let i = 0; i < this.numTitles; i++) {
-                // get list of title div ids
+        const storageKeys = ["numTitle", "numMonday", "numTuesday", "numWednesday", "numThursday", "numFriday", "numSaturday", "numSunday", "numOther", "numText"]; 
+        // delete the first letter
+        let typeList = this.listType.split(""); 
+        let firstLetterType = typeList[0].toUpperCase(); 
+        const sectionKey = "num" + firstLetterType + typeList.splice(1, typeList.length, 1).join(""); 
+        // get number of section elements
+        this.numTypes = Number(localStorage.getItem(sectionKey)); 
+        let maxDivNum = 1; // store the max ID number so that there are no duplicates when creating types
+        let typeNums = []; 
+        // if there are more than 1 type in localStorage, event listeners must be added to the buttons
+        if (this.numTypes > 1) {
+            for (let i = 0; i < this.numTypes; i++) {
+                // get list of type div ids
                 let listOfInputs = document.getElementsByTagName("div"); 
                 let listOfTypes = []; 
                 for (let i = 0; i < listOfInputs.length; i++) {
                     listOfTypes.push(listOfInputs[i].id); 
                 }
-                let listOfTitles = listOfTypes.filter((id) => id.split("-")[2] == "div"); 
-                listOfTitles = listOfTitles.filter((id) => id.split("-")[0] == "title"); 
+                let listOfTypeIDs = listOfTypes.filter((id) => id.split("-")[2] == "div"); 
+                listOfTypeIDs = listOfTypeIDs.filter((id) => id.split("-")[0] == this.listType); 
                 // add event listeners to list of saved trash buttons
-                for (let i = 0; i < listOfTitles.length; i++) {
-                    const currentTitleDiv = document.getElementById(listOfTitles[i]); 
-                    const currentTrashBtn = currentTitleDiv.lastChild.previousSibling; 
+                for (let i = 0; i < listOfTypeIDs.length; i++) {
+                    const currentTypeDiv = document.getElementById(listOfTypeIDs[i]); 
+                    const currentTrashBtn = currentTypeDiv.lastChild.previousSibling; 
                     this.listTrashBtn.push(currentTrashBtn);   
-                    this.listTrashBtn[i].addEventListener("click", () => this.deleteElem(listOfTitles[i].split("-")[1])); 
+                    this.listTrashBtn[i].addEventListener("click", () => this.deleteElem(listOfTypeIDs[i].split("-")[1])); 
                 }
-                titleNums = listOfTitles.map((elem) => Number(elem.split("-")[1])); 
+                typeNums = listOfTypeIDs.map((elem) => Number(elem.split("-")[1])); 
             }
-            maxDivNum = Math.max(...titleNums); 
+            maxDivNum = Math.max(...typeNums); 
             this.divCount = maxDivNum; 
         } else {
             // otherwise, treat as a normal, unsaved section

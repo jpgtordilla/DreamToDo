@@ -124,14 +124,15 @@ const main = () => {
     const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "other"]
     days.forEach((day) => {
         const listDiv = document.getElementById(day + "-div");
-        const defaultListElem = document.getElementById(day + "-1-div");
-        const defaultInputElem = document.getElementById(day + "-1-input");
+        const defaultListElem = listDiv.firstChild.nextElementSibling; 
+        const defaultInputElem = listDiv.firstElementChild.firstChild.nextSibling; 
         const defaultListTrashBtn = defaultListElem.lastChild.previousSibling; 
+        // const defaultListTrashBtn = defaultInputElem.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling; 
         const createListElemBtn = document.getElementById("create-item-" + day); 
         let listType = day; 
-        const defaultListUpBtn = document.getElementById(day + "-1-up"); 
-        const defaultListDownBtn = document.getElementById(day + "-1-down"); 
-        const defaultListColorBtn = document.getElementById(day + "-1-color")
+        const defaultListUpBtn = defaultInputElem.nextSibling.nextSibling; 
+        const defaultListDownBtn = defaultListUpBtn.nextSibling.nextSibling; 
+        const defaultListColorBtn = defaultListDownBtn.nextSibling.nextSibling; 
         const daySection = new ListItem(listDiv, defaultListElem, defaultInputElem, defaultListTrashBtn, createListElemBtn, listType, defaultListUpBtn, defaultListDownBtn, defaultListColorBtn);
     }); 
 }
