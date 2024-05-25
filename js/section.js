@@ -17,9 +17,11 @@ class Section {
         
         this.listType = listType; 
 
+        // retrieve data from localStorage
         this.numTitles = Number(localStorage.getItem("numTitle")); 
-        let maxDivNum = 1; 
+        let maxDivNum = 1; // store the max ID number so that there are no duplicates when creating titles
         let titleNums = []; 
+        // if there are more than 1 title in localStorage, event listeners must be added to the buttons
         if (this.numTitles > 1) {
             for (let i = 0; i < this.numTitles; i++) {
                 // get list of title div ids
@@ -42,6 +44,7 @@ class Section {
             maxDivNum = Math.max(...titleNums); 
             this.divCount = maxDivNum; 
         } else {
+            // otherwise, treat as a normal, unsaved section
             defaultTrashBtn.addEventListener("click", () => this.deleteElem(1)); 
         }
         this.createBtn.addEventListener("click", () => this.addElem()); 

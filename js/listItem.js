@@ -1,5 +1,5 @@
 // TODO: 
-// - constructor event listener conditional
+// - fix event listeners for list items, like you did for title elements
 
 /** LIST ITEM CLASS */
 
