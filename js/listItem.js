@@ -125,6 +125,26 @@ class ListItem extends Section {
         this.addOtherEvent();  
     }
 
+    /** Deletes the corresponding element with the trash button */
+    deleteElem(divNum) {
+        // get amount elements within a given div
+        let listOfElems = document.getElementsByTagName("li");  
+        // determine how many list elements there are
+        let listOfTypes = []; 
+        for (let i = 0; i < listOfElems.length; i++) {
+            listOfTypes.push(listOfElems[i].id.split("-")[0]); 
+        }
+        listOfTypes = listOfTypes.filter((elem) => elem == this.listType); 
+        let numElems = listOfTypes.length; 
+        // only delete if more than 1 element
+        if (numElems > 1) {
+            let elementToDelete = document.getElementById(this.listType + "-" + divNum + "-div"); 
+            if (elementToDelete !== undefined && elementToDelete !== null) {
+                this.div.removeChild(elementToDelete); 
+            }
+        }   
+    }
+
     /** Adds an event listener for the most recently added list element */
     addOtherEvent() {
         const currLength = this.listColorBtn.length; 

@@ -78,10 +78,22 @@ class Section {
 
     /** Deletes the corresponding element with the trash button */
     deleteElem(divNum) {
-        let elementToDelete = document.getElementById(this.listType + "-" + divNum + "-div"); 
-        if (elementToDelete !== undefined && elementToDelete !== null) {
-            this.div.removeChild(elementToDelete); 
+        // get amount elements within a given div
+        let listOfElems = document.getElementsByTagName("div"); 
+        // determine how many title or text elements there are
+        let listOfTypes = []; 
+        for (let i = 0; i < listOfElems.length; i++) {
+            listOfTypes.push(listOfElems[i].id.split("-")[0]); 
         }
+        listOfTypes = listOfTypes.filter((elem) => elem == this.listType); 
+        let numElems = listOfTypes.length; 
+        // only delete if there are more than 1 element
+        if (numElems > 2) {
+            let elementToDelete = document.getElementById(this.listType + "-" + divNum + "-div"); 
+            if (elementToDelete !== undefined && elementToDelete !== null) {
+                this.div.removeChild(elementToDelete); 
+            }
+        }   
     }
 
     /** for each trash button, add function with specific div ids */
