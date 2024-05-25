@@ -26,8 +26,14 @@ class ListItem extends Section {
         this.listUpBtn.push(defaultUpBtn); 
         this.listDownBtn.push(defaultDownBtn); 
         this.listColorBtn.push(defaultColorBtn); 
+        this.listTrashBtn.push(defaultTrashBtn); 
 
         // event listeners
+
+        defaultTrashBtn.addEventListener("click", () => this.deleteElem(1)); 
+        defaultColorBtn.addEventListener("click", () => this.changeColor(1)); 
+        defaultUpBtn.addEventListener("click", () => this.swap("up", 1));
+        defaultDownBtn.addEventListener("click", () => this.swap("down", 1));
 
         // TODO: 
         // - modify to add the amount already on screen (if not empty, access from localStorage based on listType, otherwise default)
@@ -54,7 +60,7 @@ class ListItem extends Section {
                 let listOfTypeIDs = listOfTypes.filter((id) => id.split("-")[2] == "div"); 
                 listOfTypeIDs = listOfTypeIDs.filter((id) => id.split("-")[0] == this.listType); 
                 // add event listeners to list of saved trash buttons
-                for (let i = 0; i < listOfTypeIDs.length; i++) {
+                for (let i = 1; i < listOfTypeIDs.length; i++) {
                     // access the current buttons
                     const currentTypeDiv = document.getElementById(listOfTypeIDs[i]); 
                     const currentUpBtn = currentTypeDiv.firstElementChild.nextSibling.nextSibling; 
@@ -65,22 +71,18 @@ class ListItem extends Section {
                     this.listUpBtn.push(currentUpBtn); 
                     this.listDownBtn.push(currentDownBtn); 
                     this.listColorBtn.push(currentColorBtn); 
-                    this.listTrashBtn.push(currentTrashBtn);   
+                    this.listTrashBtn.push(currentTrashBtn);  
+
                     this.listUpBtn[i].addEventListener("click", () => this.swap("up", listOfTypeIDs[i].split("-")[1]));
                     this.listDownBtn[i].addEventListener("click", () => this.swap("down", listOfTypeIDs[i].split("-")[1]));
                     this.listColorBtn[i].addEventListener("click", () => this.changeColor(listOfTypeIDs[i].split("-")[1])); 
                     this.listTrashBtn[i].addEventListener("click", () => this.deleteElem(listOfTypeIDs[i].split("-")[1])); 
-                }
+                } 
+
                 typeNums = listOfTypeIDs.map((elem) => Number(elem.split("-")[1])); 
             }
             maxDivNum = Math.max(...typeNums); 
             this.divCount = maxDivNum; 
-        } else {
-            // otherwise, treat as a normal, unsaved section
-            defaultTrashBtn.addEventListener("click", () => this.deleteElem(1)); 
-            defaultColorBtn.addEventListener("click", () => this.changeColor(1)); 
-            defaultUpBtn.addEventListener("click", () => this.swap("up", 1));
-            defaultDownBtn.addEventListener("click", () => this.swap("down", 1));
         }
     }
 
@@ -88,7 +90,9 @@ class ListItem extends Section {
     addElem() { 
         // create a clone of the default elements and their children 
         const defaultDivClone = this.defaultDivElem.cloneNode(true);
+
         this.divCount++; 
+
         // change ids of div, input, and button
         defaultDivClone.id = this.listType + "-" + this.divCount + "-div"; 
         let currentInputElem = defaultDivClone.firstChild.nextSibling; 
