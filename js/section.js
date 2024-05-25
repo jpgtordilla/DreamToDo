@@ -9,6 +9,7 @@ class Section {
         this.createBtn = createBtn; 
 
         this.listTrashBtn = []; 
+        this.listTrashBtn.length = 0; 
         
         this.divCount = 1; 
         
@@ -26,7 +27,7 @@ class Section {
         let typeNums = []; 
         // if there are more than 1 type in localStorage, event listeners must be added to the buttons
         if (this.numTypes > 1) {
-            for (let i = 0; i < this.numTypes; i++) {
+            for (let j = 0; j < this.numTypes; j++) {
                 // get list of type div ids
                 let listOfInputs = document.getElementsByTagName("div"); 
                 let listOfTypes = []; 

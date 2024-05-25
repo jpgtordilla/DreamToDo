@@ -3,12 +3,6 @@
 
 /** LIST ITEM CLASS */
 
-const emptyArray = (arr) => {
-    while(arr.length > 0) {
-        arr.pop();
-    }
-}
-
 class ListItem extends Section {
     // static variable for tracking color background
     colorCounter = 0;
@@ -23,25 +17,10 @@ class ListItem extends Section {
         
         // empty array to enable swapping
         this.listDivElems = []; 
-        emptyArray(this.listDivElems); 
         this.listInputElems = []; 
-        emptyArray(this.listInputElems); 
         this.listUpBtn = []; 
-        emptyArray(this.listUpBtn); 
         this.listDownBtn = []; 
-        emptyArray(this.listDownBtn); 
         this.listColorBtn = []; 
-        emptyArray(this.listColorBtn); 
-
-        // this.listDivElems.push(defaultDivElem); 
-        // this.listInputElems.push(defaultInputElem); 
-        // this.listUpBtn.push(defaultUpBtn); 
-        // this.listDownBtn.push(defaultDownBtn); 
-        // this.listColorBtn.push(defaultColorBtn); 
-        // this.listTrashBtn.push(defaultTrashBtn); 
-
-        // TODO: 
-        // - modify to add the amount already on screen (if not empty, access from localStorage based on listType, otherwise default)
 
         // retrieve data from localStorage
         const storageKeys = ["numTitle", "numMonday", "numTuesday", "numWednesday", "numThursday", "numFriday", "numSaturday", "numSunday", "numOther", "numText"]; 
@@ -55,37 +34,35 @@ class ListItem extends Section {
         let typeNums = []; 
         // if there are more than 1 type in localStorage, event listeners must be added to the buttons
         if (this.numTypes > 1) {
-            for (let i = 0; i < this.numTypes; i++) {
-                // get list of type li tags
-                let listOfInputs = document.getElementsByTagName("li"); 
-                let listOfTypes = []; 
-                for (let i = 0; i < listOfInputs.length; i++) {
-                    listOfTypes.push(listOfInputs[i].id); 
-                }
-                let listOfTypeIDs = listOfTypes.filter((id) => id.split("-")[2] == "div"); 
-                listOfTypeIDs = listOfTypeIDs.filter((id) => id.split("-")[0] == this.listType); 
-                // add event listeners to list of saved trash buttons
-                for (let i = 0; i < listOfTypeIDs.length; i++) {
-                    // access the current buttons
-                    const currentTypeDiv = document.getElementById(listOfTypeIDs[i]); 
-                    const currentUpBtn = currentTypeDiv.firstElementChild.nextSibling.nextSibling; 
-                    const currentDownBtn = currentUpBtn.nextSibling.nextSibling; 
-                    const currentColorBtn = currentDownBtn.nextSibling.nextSibling; 
-                    const currentTrashBtn = currentTypeDiv.lastChild.previousSibling; 
-                    // add to lists and add to event listener
-                    this.listUpBtn.push(currentUpBtn); 
-                    this.listDownBtn.push(currentDownBtn); 
-                    this.listColorBtn.push(currentColorBtn); 
-                    this.listTrashBtn.push(currentTrashBtn);  
-
-                    this.listUpBtn[i].addEventListener("click", () => this.swap("up", listOfTypeIDs[i].split("-")[1]));
-                    this.listDownBtn[i].addEventListener("click", () => this.swap("down", listOfTypeIDs[i].split("-")[1]));
-                    this.listColorBtn[i].addEventListener("click", () => this.changeColor(listOfTypeIDs[i].split("-")[1])); 
-                    this.listTrashBtn[i].addEventListener("click", () => this.deleteElem(listOfTypeIDs[i].split("-")[1])); 
-                } 
-
-                typeNums = listOfTypeIDs.map((elem) => Number(elem.split("-")[1])); 
+            // get list of type li tags
+            let listOfInputs = document.getElementsByTagName("li"); 
+            let listOfTypes = []; 
+            for (let i = 0; i < listOfInputs.length; i++) {
+                listOfTypes.push(listOfInputs[i].id); 
             }
+            let listOfTypeIDs = listOfTypes.filter((id) => id.split("-")[2] == "div"); 
+            listOfTypeIDs = listOfTypeIDs.filter((id) => id.split("-")[0] == this.listType); 
+            // add event listeners to list of saved trash buttons
+            for (let i = 0; i < listOfTypeIDs.length; i++) {
+                // access the current buttons
+                const currentTypeDiv = document.getElementById(listOfTypeIDs[i]); 
+                const currentUpBtn = currentTypeDiv.firstElementChild.nextSibling.nextSibling; 
+                const currentDownBtn = currentUpBtn.nextSibling.nextSibling; 
+                const currentColorBtn = currentDownBtn.nextSibling.nextSibling; 
+                const currentTrashBtn = currentTypeDiv.lastChild.previousSibling; 
+                // add to lists and add to event listener
+                this.listUpBtn.push(currentUpBtn); 
+                this.listDownBtn.push(currentDownBtn); 
+                this.listColorBtn.push(currentColorBtn); 
+                this.listTrashBtn.push(currentTrashBtn);  
+
+                this.listUpBtn[i].addEventListener("click", () => this.swap("up", listOfTypeIDs[i].split("-")[1]));
+                this.listDownBtn[i].addEventListener("click", () => this.swap("down", listOfTypeIDs[i].split("-")[1]));
+                this.listColorBtn[i].addEventListener("click", () => this.changeColor(listOfTypeIDs[i].split("-")[1])); 
+                this.listTrashBtn[i].addEventListener("click", () => this.deleteElem(listOfTypeIDs[i].split("-")[1])); 
+            } 
+
+            typeNums = listOfTypeIDs.map((elem) => Number(elem.split("-")[1])); 
             maxDivNum = Math.max(...typeNums); 
             this.divCount = maxDivNum; 
         } else {
