@@ -97,16 +97,29 @@ class ListItem extends Section {
 
     /** Swaps the text and color of two different elements, either up or down in the list */
     swap(direction, divNum) {
+
+        let listOfInputs = document.getElementsByTagName("input"); 
+        console.log(listOfInputs); 
+        // get IDs from the input elements
+        let listOfInputIDs = []; 
+        for (let i = 0; i < listOfInputs.length; i++) {
+            listOfInputIDs.push(listOfInputs[i].id); 
+        }
+        // filter so that searching only within the listType
+        listOfInputIDs = listOfInputIDs.filter((elem) => elem.split("-")[0] == this.listType);
+
+        let currID = this.listType + "-" + divNum + "-input"; 
+        let currElem = document.getElementById(currID);
+        let currIndex = listOfInputIDs.indexOf(currID); 
+
         if (direction == "up") {
-            if (divNum != 1) {
-                let currElem = document.getElementById(this.listType + "-" + divNum + "-input");
-                let prevElem = document.getElementById(this.listType + "-" + (divNum - 1) + "-input");
+            if (divNum != 1 && listOfInputIDs.indexOf(currID) != 0) {
+                let prevElem = document.getElementById(listOfInputIDs[currIndex - 1]); 
                 this.swapElements(currElem, prevElem);
             }
         } else if (direction == "down") {
-            if (divNum != this.listDownBtn.length) {
-                let currElem = document.getElementById(this.listType + "-" + divNum + "-input");
-                let nextElem = document.getElementById(this.listType + "-" + (divNum + 1) + "-input");
+            if (listOfInputIDs.indexOf(currID) != listOfInputIDs.length) {
+                let nextElem = document.getElementById(listOfInputIDs[currIndex + 1]); 
                 this.swapElements(currElem, nextElem);
             }
         }
