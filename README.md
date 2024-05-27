@@ -7,4 +7,6 @@ The user must "save" their results which creates an object in their browser's lo
 There are several improvements that can be made: 
 1. Clean up some of the code and address some non-crucial bugs.
 2. Add a backend to store user data and enable use across multiple devices. 
-3. Update the CSS to better suit mobile users. 
+3. Update the CSS to better suit mobile users.
+4. Reorganize dates based on the current Date-Time. 
+5. Add the ability to create sub-lists within days. 
